@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lugargentefeliz/ui/Sections.dart';
-import 'package:lugargentefeliz/ui/home/HomeScreen.dart';
-import 'package:lugargentefeliz/ui/messages/MessagesScreen.dart';
+import 'package:lugargentefeliz/ui/sections.dart';
 
 void main() => runApp(const LgfApp());
 
@@ -27,7 +25,6 @@ class MainWidget extends StatefulWidget {
 }
 
 class _MainWidget extends State<MainWidget> {
-
   int _selectedIndex = 0;
 
   static const List<Section> _sections = Section.values;
@@ -48,20 +45,19 @@ class _MainWidget extends State<MainWidget> {
         child: _sections.elementAt(_selectedIndex).widget,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Messages',
-          )
-        ],
+        items: _sections.map((e) => mapFromSection(e)).toList(),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
     );
   }
+
+  BottomNavigationBarItem mapFromSection(Section section) {
+    return BottomNavigationBarItem(
+      icon: Icon(section.icon, color: Colors.blue),
+      label: section.title,
+    );
+  }
+
 }
